@@ -1,0 +1,25 @@
+# Compiled binaries
+*.exe
+*.obj
+*.exp
+*.lib
+
+# Build artifacts
+*.o
+*.a
+
+# IDE files
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Results (large CSV files)
+results_*.csv
+
+# Temporary files
+*.tmp
+extracted_content.txt
+
+# Original assignment document
+CCP_*.docx

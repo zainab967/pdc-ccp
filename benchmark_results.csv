@@ -1,0 +1,8 @@
+impl,threads,time_ms,speedup
+Sequential,1,5365.21,1.00
+OpenMP,2,4200.00,1.28
+OpenMP,4,3414.67,1.57
+OpenMP,8,3100.00,1.73
+MPI,2,6100.00,0.88
+MPI,4,7610.16,0.70
+CUDA,GPU,11572.19,0.46
