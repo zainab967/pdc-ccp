@@ -48,7 +48,7 @@
 % ABSTRACT
 % ================================
 \begin{abstract}
-This report presents the implementation and performance analysis of parallel solutions for simulating temperature evolution in a one-dimensional rod using the heat equation. We implement four versions: sequential, OpenMP (shared memory), MPI (distributed memory), and CUDA (GPU). The Forward-Time Central-Space (FTCS) finite difference method is used for numerical discretization. Performance analysis with N=10,000 grid points reveals that OpenMP achieves a 1.57x speedup, while MPI and CUDA exhibit overhead limitations for this iterative problem. Results are validated against the analytical solution with L2 error of $3.82 \times 10^{-8}$.
+This report presents the implementation and performance analysis of parallel solutions for simulating temperature evolution in a one-dimensional rod using the heat equation. We implement four versions: sequential, OpenMP (shared memory), MPI (distributed memory), and CUDA (GPU). The Forward-Time Central-Space (FTCS) finite difference method is used for numerical discretization. Performance analysis with N=10,000 grid points reveals that OpenMP achieves a 1.74x speedup, while MPI shows modest improvement and CUDA exhibits overhead limitations for this iterative problem. Results are validated against the analytical solution with L2 error of $3.82 \times 10^{-8}$.
 
 \textbf{Keywords:} Heat Equation, Parallel Computing, OpenMP, MPI, CUDA, Finite Difference Method
 \end{abstract}
@@ -166,7 +166,7 @@ __global__ void heat_kernel(double* T_old,
 
 \begin{itemize}
     \item CPU: Intel Core (4 threads used for testing)
-    \item GPU: NVIDIA GeForce RTX 3070 Laptop GPU
+    \item GPU: NVIDIA Quadro T1000
     \item Grid points: $N = 10,000$
     \item Time steps: 1,249,750
     \item Simulation time: 0.5 seconds
@@ -182,10 +182,10 @@ __global__ void heat_kernel(double* T_old,
 \toprule
 Implementation & Threads/Procs & Time (ms) & Speedup \\
 \midrule
-Sequential     & 1             & 5,365.21  & 1.00x   \\
-\textbf{OpenMP}& \textbf{4}   & \textbf{3,414.67} & \textbf{1.57x} \\
-MPI            & 4             & 7,610.16  & 0.70x   \\
-CUDA           & GPU           & 11,572.19 & 0.46x   \\
+Sequential     & 1             & 6,079.44  & 1.00x   \\
+\textbf{OpenMP}& \textbf{4}   & \textbf{3,485.92} & \textbf{1.74x} \\
+MPI            & 4             & 5,259.89  & 1.16x   \\
+CUDA           & GPU           & 11,146.24 & 0.55x   \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -216,12 +216,12 @@ where $P$ is the parallel fraction and $p$ is the number of processors.
 
 \subsection{Performance Discussion}
 
-Our results show that OpenMP achieves the best performance for this problem. The MPI and CUDA implementations are slower than sequential due to overhead:
+Our results show that OpenMP achieves the best performance for this problem. MPI shows modest speedup while CUDA exhibits overhead limitations:
 
 \begin{itemize}
-    \item \textbf{OpenMP (1.57x speedup):} Low thread synchronization overhead makes it ideal for this compute-bound problem.
-    \item \textbf{MPI (0.70x):} Inter-process communication overhead on a single machine dominates. MPI excels on distributed clusters.
-    \item \textbf{CUDA (0.46x):} With 1.25 million kernel launches (one per time step), kernel launch overhead ($\sim$5-10$\mu$s each) accumulates significantly.
+    \item \textbf{OpenMP (1.74x speedup):} Low thread synchronization overhead makes it ideal for this compute-bound problem.
+    \item \textbf{MPI (1.16x speedup):} Shows modest improvement with 4 processes. The overhead of inter-process communication on a single machine limits scaling, but still achieves speedup through parallelization.
+    \item \textbf{CUDA (0.55x):} With 1.25 million kernel launches (one per time step), kernel launch overhead ($\sim$5-10$\mu$s each) accumulates significantly, outweighing GPU parallelism benefits.
 \end{itemize}
 
 This demonstrates that the optimal parallelization strategy depends on problem characteristics, not just available hardware.
@@ -245,8 +245,8 @@ The higher accuracy with N=10,000 (vs N=100) demonstrates improved numerical pre
 This project successfully demonstrates parallel computing techniques for solving the heat equation. Key findings:
 
 \begin{itemize}
-    \item \textbf{OpenMP achieved 1.57x speedup} with 4 threads, making it the best choice for this iterative problem on shared-memory systems
-    \item \textbf{MPI is better suited for distributed clusters} rather than single-machine execution where communication overhead dominates
+    \item \textbf{OpenMP achieved 1.74x speedup} with 4 threads, making it the best choice for this iterative problem on shared-memory systems
+    \item \textbf{MPI achieved 1.16x speedup} with 4 processes on a single machine, demonstrating that parallelization benefits can outweigh communication overhead even in non-distributed setups
     \item \textbf{CUDA requires problem restructuring} to minimize kernel launches; batch processing or implicit methods would improve GPU utilization
     \item All implementations maintain identical numerical accuracy ($L2 = 3.82 \times 10^{-8}$)
 \end{itemize}
@@ -283,9 +283,9 @@ J. W. Thomas, "Numerical Partial Differential Equations: Finite Difference Metho
 % \includegraphics[width=0.15\textwidth]{author1.jpg}
 % \end{figure}
 
-\textbf{syed shaheer nasir} is a Computer Science student at UMT Lahore with an interest in artifical intelligence and machine learning models
+\textbf{Syed Shaheer Nasir} is a Computer Science student at UMT Lahore with an interest in artificial intelligence and machine learning models.
 
-\textbf{ Irshad} is a Computer Science student at UMT Lahore with interests machine learning and LLMS.
+\textbf{Zainab Usman} is a Computer Science student at UMT Lahore with interests in machine learning and LLMs.
 
 \vspace{1em}
 
