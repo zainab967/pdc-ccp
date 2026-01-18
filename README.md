@@ -13,7 +13,7 @@ $$\frac{\partial T}{\partial t} = \alpha \frac{\partial^2 T}{\partial x^2}$$
 - Rod length: L = 1 meter
 - Boundary: T(0, t) = T(L, t) = 0°C
 - Initial: T(x, 0) = 100 × sin(πx)
-- Thermal diffusivity: α = 0.01 m²/s
+- Thermal diffusivity: α = 0.01 m²/s   assumed as a constant because the material was unspecified.
 
 ## 🚀 Implementations
 
@@ -106,11 +106,10 @@ PDC-CCP/
 ## 📄 Report
 
 - **Overleaf:** [View Report](https://www.overleaf.com/read/hyqzgndjpvww#669d84)
-- **YouTube:** [Coming Soon]
 
 ## 🔬 Algorithm
 
-**FTCS (Forward-Time Central-Space)** finite difference method:
+**FTCS (Forward-Time Central-Space)** finite difference:
 
 ```
 T[i]^(n+1) = T[i]^n + r × (T[i+1]^n - 2×T[i]^n + T[i-1]^n)
@@ -120,13 +119,9 @@ Where `r = α×Δt/Δx²` (must be ≤ 0.5 for stability)
 
 ## 👥 Authors
 
-- **Muhammad Usman Butt** - buttu7666@gmail.com
-- **Nida Irshad** - nidairshad66@gmail.com
+- **syed shaheer nasir**  - f2022266454@umt.edu.pk
+- **Zainab Usman** - f2022266828@umt.edu.pk
 
 Department of Computer Science  
 University of Management and Technology, Lahore  
-Fall 2025
 
-## 📝 License
-
-This project is submitted as part of the CS 4172 course requirements.
