@@ -92,6 +92,7 @@ PDC-CCP/
 ## Report
 
 - **Overleaf:** [View Report](https://www.overleaf.com/project/696d29c28f82c7a65f7a21ef)
+- **video:** [View video](https://drive.google.com/drive/folders/1JWz9TGxsMGBiHjcyDvbNq8xIBRHQ-7D3?usp=sharing)
 
 ## Algorithm
 
