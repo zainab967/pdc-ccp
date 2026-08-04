@@ -26,3 +26,5 @@ CCP_*.docx
 .gitignore
 temp_interactive_push.bat
 branch_structure.json
+config.bat
+node_modules
